@@ -1,6 +1,6 @@
 # 🥇 Olympic Figure Skating: Art vs Technical Power (2006–2026)
 
-![Banner](https://64.media.tumblr.com/14679b789150e4f58b2bbfef89afbfad/931f93a77177aee2-34/s640x960/59a66b2fb403177fd2951a30cdca6075f0367abc.gif)
+![Banner](./skating.gif)
 
 ## 👋 Hi, I'm Nupur!!
 
