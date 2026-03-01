@@ -503,20 +503,195 @@ footer{
 /* ─── SHERLOCK DARK SECTION ─── */
 #sherlock{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:900px){
-  .two-col{grid-template-columns:1fr}
-  .two-col.rev{direction:ltr}
-  .tab-panel.active{grid-template-columns:1fr}
-  .legend-chart-wrap{border-left:none;border-top:1px solid var(--border)}
-  .nav-links{display:none}
-  #nav{padding:0 20px}
-  .section{padding:60px 20px}
-  footer{flex-direction:column;text-align:center}
-  .footer-info{text-align:center}
-  .nupur-note{flex-direction:column;gap:6px}
+/* ─── HAMBURGER BUTTON (hidden on desktop) ─── */
+#nav-toggle{
+  display:none;
+  flex-direction:column;justify-content:center;align-items:center;
+  gap:5px;width:40px;height:40px;
+  background:none;border:none;cursor:pointer;padding:4px;
+}
+#nav-toggle span{
+  display:block;width:22px;height:2px;
+  background:var(--ice);border-radius:2px;
+  transition:transform .25s,opacity .25s;
+}
+#nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#nav-toggle.open span:nth-child(2){opacity:0}
+#nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─── MOBILE DRAWER ─── */
+#nav-drawer{
+  display:none;
+  position:fixed;top:56px;left:0;right:0;z-index:99;
+  background:rgba(8,10,14,0.98);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  padding:16px 0 20px;
+}
+#nav-drawer.open{display:block}
+#nav-drawer ul{list-style:none;display:flex;flex-direction:column;gap:0}
+#nav-drawer ul li a{
+  display:block;padding:12px 24px;
+  font-size:0.85rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--text2);
+  border-bottom:1px solid var(--border);
+  transition:color .2s,background .2s;
+}
+#nav-drawer ul li:last-child a{border-bottom:none}
+#nav-drawer ul li a:hover{color:var(--ice);background:rgba(126,200,227,0.05)}
+
+/* ─── RESPONSIVE — BIG SCREENS (1600px+) ─── */
+@media(min-width:1600px){
+  .section{max-width:1500px;padding:110px 64px}
+  .section-divider{max-width:1372px}
+  .hero-stats{max-width:900px;margin-left:auto;margin-right:auto}
+  .verdict-center{max-width:960px}
 }
 
+/* ─── RESPONSIVE — TABLET LANDSCAPE / SMALL DESKTOP (900–1200px) ─── */
+@media(max-width:1200px){
+  #nav{padding:0 28px}
+  .nav-links li a{padding:4px 8px;font-size:0.66rem}
+  .section{padding:80px 32px}
+  .section-divider{margin:0 32px}
+}
+
+/* ─── RESPONSIVE — TABLET PORTRAIT + LANDSCAPE (600–900px) ─── */
+@media(max-width:900px){
+  /* Nav */
+  .nav-links{display:none}
+  .nav-right{display:none}
+  #nav{padding:0 16px}
+  #nav-toggle{display:flex}
+
+  /* Layout */
+  .two-col{grid-template-columns:1fr;gap:28px}
+  .two-col.rev{direction:ltr}
+  .section{padding:60px 20px}
+  .section-divider{margin:0 20px}
+
+  /* Hero */
+  #hero{padding:80px 20px 48px}
+  .hero-stats{flex-wrap:wrap}
+  .h-stat{flex:1 1 calc(33.333% - 1px);min-width:100px}
+  .nupur-note{flex-direction:column;gap:6px;padding:14px 16px}
+
+  /* Gateway */
+  #gateway{padding:80px 20px}
+  .gateway-heading{font-size:clamp(2.4rem,7vw,4.5rem)}
+  .gateway-btn{padding:14px 28px;font-size:0.75rem}
+
+  /* Legend tabs */
+  .legend-tabs{flex-wrap:wrap}
+  .tab-btn{flex:1 1 33%;font-size:0.72rem;padding:10px 8px;letter-spacing:0.06em}
+  .tab-panel.active{grid-template-columns:1fr}
+  .legend-chart-wrap{border-left:none;border-top:1px solid var(--border)}
+  .legend-bio{padding:24px}
+
+  /* Charts */
+  #chart-arena{height:360px!important}
+  #chart-ranks{height:440px!important}
+  #chart-nations{height:420px!important}
+
+  /* Verdict */
+  .verdict-center{padding:72px 20px}
+
+  /* Footer */
+  footer{flex-direction:column;text-align:center;padding:24px 20px}
+  .footer-info{text-align:center}
+
+  /* Cursor: hide on touch */
+  #cur,#cur2{display:none!important}
+}
+
+/* ─── RESPONSIVE — MOBILE (max 600px) ─── */
+@media(max-width:600px){
+  /* Nav */
+  .nav-logo{font-size:1.1rem}
+
+  /* Hero */
+  #hero{padding:72px 16px 40px}
+  .hero-question{font-size:clamp(0.85rem,3.5vw,1.1rem)}
+  .hero-stats{gap:0}
+  .h-stat{flex:1 1 calc(50% - 1px)}
+  .h-stat:nth-child(5){flex:1 1 100%;border-right:none}
+  .h-stat-n{font-size:2rem}
+  .hero-byline{font-size:0.75rem;letter-spacing:0.08em}
+  .nupur-note{padding:12px 14px}
+  .nupur-note p{font-size:0.85rem}
+  .hero-scroll-hint{margin-top:28px}
+
+  /* Gateway */
+  #gateway{padding:64px 16px}
+  .gateway-heading{font-size:clamp(2rem,9vw,3.2rem);line-height:1.05}
+  .gateway-sub{font-size:0.92rem}
+  .gateway-btn{margin-top:28px;padding:14px 22px;font-size:0.72rem;gap:8px}
+  .gateway-skip{font-size:0.6rem}
+
+  /* Sections */
+  .section{padding:48px 16px}
+  .section-divider{margin:0 16px}
+  .section-title{font-size:clamp(1.8rem,8vw,3rem)}
+  .section-sub{font-size:0.88rem}
+  .finding{padding:12px 14px}
+  .finding p{font-size:0.86rem}
+
+  /* Charts — shorter on small screens */
+  #chart-arena{height:300px!important}
+  #chart-recipe{height:260px!important}
+  #chart-trend{height:260px!important}
+  #chart-gender{height:260px!important}
+  #chart-gaps{height:320px!important}
+  #chart-margin{height:240px!important}
+  #chart-ranks{height:380px!important}
+  #chart-nations{height:340px!important}
+  #chart-hanyu{height:300px!important}
+  #chart-trusova{height:300px!important}
+  #chart-liu{height:300px!important}
+
+  /* Chart card headers */
+  .chart-hdr-title{font-size:0.58rem;letter-spacing:0.04em}
+
+  /* Legend */
+  .legend-tabs{flex-direction:column}
+  .tab-btn{border-right:none!important;border-bottom:1px solid var(--border);padding:12px 16px;text-align:left}
+  .legend-bio{padding:16px}
+  .legend-name{font-size:1.6rem}
+  .legend-stats{flex-wrap:wrap}
+  .l-stat{flex:1 1 calc(33.33% - 1px)}
+
+  /* Skater GIF cards */
+  .legend-tabs~div>[style*="max-width:240px"]{max-width:100%!important;min-width:140px}
+
+  /* Verdict */
+  .verdict-center{padding:56px 16px}
+  .verdict-a{font-size:clamp(1.6rem,6vw,2.8rem)}
+  .vi{gap:10px}
+  .vi-act{width:40px;font-size:0.58rem}
+  .verdict-quote{padding:20px}
+  .verdict-quote p{font-size:1rem}
+
+  /* Footer */
+  footer{padding:20px 16px;gap:10px}
+  .footer-brand{font-size:0.85rem}
+  .footer-info{font-size:0.58rem}
+
+  /* Music button */
+  #music-btn{bottom:16px;right:16px;width:40px;height:40px}
+
+  /* Cursor always off on mobile */
+  body{cursor:auto!important}
+  #cur,#cur2{display:none!important}
+  .gateway-btn,.gateway-skip,#music-btn{cursor:pointer!important}
+}
+
+/* ─── RESPONSIVE — SMALL MOBILE (max 380px) ─── */
+@media(max-width:380px){
+  .hero-stats .h-stat{flex:1 1 calc(50% - 1px)}
+  .gateway-heading{font-size:clamp(1.7rem,10vw,2.6rem)}
+  .section-title{font-size:clamp(1.6rem,9vw,2.6rem)}
+  .legend-tabs{font-size:0.7rem}
+  .tab-btn{font-size:0.65rem;padding:10px 12px}
 }
 
 .h-stat-l{
@@ -651,20 +826,9 @@ footer{
 
 <!-- ── CURSOR (ice skate) ── -->
 <div id="cur">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36" style="filter:drop-shadow(0 0 6px rgba(126,200,227,0.7))">
-    <!-- boot -->
-    <path d="M10 14 Q10 8 18 8 L38 8 Q44 8 46 14 L46 30 Q46 36 40 38 L14 38 Q8 38 8 32 L8 18 Q8 14 10 14Z" fill="#7ec8e3" opacity="0.95"/>
-    <!-- toe box -->
-    <path d="M38 8 L46 8 Q52 8 54 14 L54 22 Q54 28 48 30 L46 30 L46 14 Q44 8 38 8Z" fill="#b8e4f8"/>
-    <!-- ankle strap -->
-    <rect x="8" y="22" width="38" height="5" rx="2" fill="#4a90b0"/>
-    <!-- laces detail -->
-    <line x1="20" y1="10" x2="20" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
-    <line x1="27" y1="10" x2="27" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
-    <line x1="34" y1="10" x2="34" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
-    <!-- blade -->
-    <path d="M12 38 L52 38 Q58 38 60 42 L4 42 Q4 38 12 38Z" fill="#ddeaf8"/>
-    <path d="M4 42 L60 42" stroke="#b8e4f8" stroke-width="1" opacity="0.6"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#7ec8e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(126,200,227,0.8))">
+    <path d="M12 2L8 8H4l3.5 3-1.5 5 6-3.5 6 3.5-1.5-5L20 8h-4z"/>
+    <circle cx="12" cy="12" r="1.5" fill="#7ec8e3" stroke="none"/>
   </svg>
 </div>
 <div id="cur2"></div>
@@ -684,7 +848,24 @@ footer{
     <li><a href="#verdict">Verdict</a></li>
   </ul>
   <div class="nav-right">Figure Skating · 2006–2026</div>
+  <button id="nav-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div id="nav-drawer">
+  <ul>
+    <li><a href="#arena" onclick="closeNav()">Arena</a></li>
+    <li><a href="#recipe" onclick="closeNav()">Recipe</a></li>
+    <li><a href="#evolution" onclick="closeNav()">Evolution</a></li>
+    <li><a href="#sherlock" onclick="closeNav()">Sherlock</a></li>
+    <li><a href="#segments" onclick="closeNav()">Segments</a></li>
+    <li><a href="#nations" onclick="closeNav()">Nations</a></li>
+    <li><a href="#legends" onclick="closeNav()">Legends</a></li>
+    <li><a href="#verdict" onclick="closeNav()">Verdict</a></li>
+  </ul>
+</div>
 
 <!-- ════════ GATEWAY ════════ -->
 <section id="gateway">
@@ -705,11 +886,10 @@ footer{
       The notebook is the real story. <strong>This page is just the highlight reel.</strong>
       I highly recommend reading it first.
     </p>
-    <a href="https://github.com/Nupur-Gudigar/olympic-skating-analysis/blob/main/Figure_Skating_Analysis_notebook.ipynb"
+    <a href="https://nbviewer.org/github/Nupur-Gudigar/olympic-skating-analysis/blob/main/Figure_Skating_Analysis_notebook.ipynb"
        target="_blank" rel="noopener noreferrer"
        class="gateway-btn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-      Open the Full Notebook on GitHub
+      Open the Full Interactive Notebook
     </a>
     <button class="gateway-skip" onclick="document.getElementById('hero').scrollIntoView({behavior:'smooth'})">
       I already know figure skating — take me to the charts ↓
@@ -1436,6 +1616,24 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.addEventListener('click', startMusic);
   document.addEventListener('keydown', startMusic);
   document.addEventListener('scroll', startMusic, {once:true});
+});
+
+// ── MOBILE NAV TOGGLE ──
+function toggleNav(){
+  const btn=document.getElementById('nav-toggle');
+  const drawer=document.getElementById('nav-drawer');
+  btn.classList.toggle('open');
+  drawer.classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('nav-toggle').classList.remove('open');
+  document.getElementById('nav-drawer').classList.remove('open');
+}
+// Close drawer on outside click
+document.addEventListener('click',e=>{
+  const drawer=document.getElementById('nav-drawer');
+  const toggle=document.getElementById('nav-toggle');
+  if(drawer.classList.contains('open')&&!drawer.contains(e.target)&&!toggle.contains(e.target))closeNav();
 });
 
 function toggleMusic(){
