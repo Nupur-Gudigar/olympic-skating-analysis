@@ -61,6 +61,34 @@ body{
 ::-webkit-scrollbar-track{background:var(--black)}
 ::-webkit-scrollbar-thumb{background:var(--ice);border-radius:2px}
 
+/* ─── INTRO SEQUENCE ─── */
+#intro{
+  position:fixed;inset:0;z-index:10000;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.intro-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,10vw,9rem);
+  letter-spacing:0.04em;
+  text-align:center;
+  line-height:1;
+  color:#fff;
+  animation:introReveal 0.6s ease both;
+}
+.intro-text span{color:var(--ice)}
+.intro-sub{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(0.6rem,1.5vw,0.85rem);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text2);
+  text-align:center;
+  margin-top:16px;
+  animation:introReveal 0.6s 0.2s ease both;
+}
+@keyframes introReveal{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 
 /* sweeping lines — ice */
 .sweep{
@@ -489,6 +517,7 @@ footer{
   .nupur-note{flex-direction:column;gap:6px}
 }
 
+}
 
 .h-stat-l{
   color:#ffffff;
@@ -584,102 +613,72 @@ footer{
 }
 .gateway-skip:hover{color:rgba(255,255,255,0.7)}
 
-/* ─── MUSIC WIDGET ─── */
-#music-widget{
-  position:fixed;bottom:28px;right:28px;z-index:500;
-  display:flex;flex-direction:column;align-items:flex-end;gap:8px;
-}
-#music-hint{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--ice);
-  background:rgba(8,10,14,0.85);
-  border:1px solid rgba(126,200,227,0.35);
-  padding:5px 10px;border-radius:2px;
-  animation:hintPulse 2s ease infinite;
-  white-space:nowrap;
-}
-@keyframes hintPulse{
-  0%,100%{opacity:1;transform:translateX(0)}
-  50%{opacity:0.6;transform:translateX(-4px)}
-}
-#music-controls{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(8,10,14,0.85);
-  border:1px solid rgba(126,200,227,0.35);
-  border-radius:30px;
-  padding:8px 14px;
-  backdrop-filter:blur(12px);
-}
+/* ─── MUSIC BUTTON ─── */
 #music-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(126,200,227,0.15);
-  border:1px solid rgba(126,200,227,0.4);
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(126,200,227,0.12);
+  border:1px solid rgba(126,200,227,0.35);
   display:flex;align-items:center;justify-content:center;
-  cursor:none;transition:background .2s;flex-shrink:0;
+  cursor:none;transition:background .2s,border-color .2s,transform .2s;
 }
-#music-btn:hover{background:rgba(126,200,227,0.3)}
-#music-btn svg{width:14px;height:14px;color:var(--ice)}
+#music-btn:hover{background:rgba(126,200,227,0.25);border-color:rgba(126,200,227,0.7);transform:scale(1.1)}
+#music-btn svg{width:18px;height:18px;color:var(--ice)}
 #music-btn .icon-off{display:none}
 #music-btn.muted .icon-on{display:none}
 #music-btn.muted .icon-off{display:block}
-#volume-slider{
-  -webkit-appearance:none;appearance:none;
-  width:80px;height:3px;
-  background:linear-gradient(to right,var(--ice) 35%,rgba(255,255,255,0.15) 35%);
-  border-radius:2px;outline:none;cursor:none;
-}
-#volume-slider::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:12px;height:12px;border-radius:50%;
-  background:var(--ice);
-  box-shadow:0 0 6px rgba(126,200,227,0.6);
-  cursor:none;
-}
-
-@keyframes bounceDown{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(6px)}
-}
 
 </style>
 </head>
 <body>
 
 <!-- ── AUDIO ── -->
-<audio id="bg-music" loop autoplay>
+<audio id="bg-music" loop>
   <source src="skating-music.mpeg" type="audio/mpeg">
 </audio>
 
 <!-- ── MUSIC TOGGLE ── -->
-<div id="music-widget">
- <div id="music-hint" style="text-align:center;margin-bottom:4px">
-  <svg width="60" height="50" viewBox="0 0 40 50" fill="none" style="animation:bounceDown 0.8s ease infinite">
-    <path d="M20 2 L20 35" stroke="#7ec8e3" stroke-width="3" stroke-linecap="round"/>
-    <path d="M8 25 L20 40 L32 25" stroke="#7ec8e3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<button id="music-btn" title="Toggle music" onclick="toggleMusic()">
+  <!-- playing icon -->
+  <svg class="icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
   </svg>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ice);margin-top:2px">play music</div>
+  <!-- muted icon -->
+  <svg class="icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+</button>
+
+<!-- ── CURSOR (ice skate) ── -->
+<div id="cur">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36" style="filter:drop-shadow(0 0 6px rgba(126,200,227,0.7))">
+    <!-- boot -->
+    <path d="M10 14 Q10 8 18 8 L38 8 Q44 8 46 14 L46 30 Q46 36 40 38 L14 38 Q8 38 8 32 L8 18 Q8 14 10 14Z" fill="#7ec8e3" opacity="0.95"/>
+    <!-- toe box -->
+    <path d="M38 8 L46 8 Q52 8 54 14 L54 22 Q54 28 48 30 L46 30 L46 14 Q44 8 38 8Z" fill="#b8e4f8"/>
+    <!-- ankle strap -->
+    <rect x="8" y="22" width="38" height="5" rx="2" fill="#4a90b0"/>
+    <!-- laces detail -->
+    <line x1="20" y1="10" x2="20" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="27" y1="10" x2="27" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="34" y1="10" x2="34" y2="21" stroke="#080a0e" stroke-width="1.5" opacity="0.4"/>
+    <!-- blade -->
+    <path d="M12 38 L52 38 Q58 38 60 42 L4 42 Q4 38 12 38Z" fill="#ddeaf8"/>
+    <path d="M4 42 L60 42" stroke="#b8e4f8" stroke-width="1" opacity="0.6"/>
+  </svg>
 </div>
-  <div id="music-controls">
-    <button id="music-btn" title="Toggle music" onclick="toggleMusic()">
-      <svg class="icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      <svg class="icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-    </button>
-    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.35"
-      oninput="document.getElementById('bg-music').volume=this.value">
+<div id="cur2"></div>
+
+<!-- ── INTRO ── -->
+<div id="intro">
+  <div class="sweep"></div>
+  <div style="text-align:center">
+    <div class="intro-text">ART <span>VS</span> POWER</div>
+    <div class="intro-sub">Olympic Figure Skating · 2006–2026 · by Nupur</div>
   </div>
+  <div class="sweep"></div>
 </div>
 
-<div id="cur">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#7ec8e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(126,200,227,0.8))">
-    <path d="M12 2L8 8H4l3.5 3-1.5 5 6-3.5 6 3.5-1.5-5L20 8h-4z"/>
-    <circle cx="12" cy="12" r="1.5" fill="#7ec8e3" stroke="none"/>
-  </svg>
-</div>
 <!-- ── NAV ── -->
 <nav id="nav">
   <div class="nav-logo"><b>ART vs POWER</b></div>
@@ -1113,6 +1112,13 @@ const C = {
   field:'rgba(170,180,200,0.22)',
 };
 
+// ── INTRO dismiss ──
+setTimeout(()=>{
+  const intro=document.getElementById('intro');
+  intro.style.transition='opacity 0.7s ease';
+  intro.style.opacity='0';
+  setTimeout(()=>intro.style.display='none',700);
+},1800);
 
 // ── CURSOR ──
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
@@ -1431,25 +1437,29 @@ function drawLiuChart(){
 
 // ══ INIT ══
 document.addEventListener('DOMContentLoaded',()=>{
-document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
   drawArena();drawRecipe();drawTrend();drawGender();
   drawGapMap();drawMargin();drawRanks();drawNations();drawHanyu();
 
-  // ── MUSIC ──
+  // ── MUSIC: autoplay on first interaction ──
   const music = document.getElementById('bg-music');
   music.volume = 0.35;
-  music.play().catch(()=>{});
-
-  // ── SLIDER initial fill ──
-  const slider = document.getElementById('volume-slider');
-  slider.style.background = `linear-gradient(to right, #7ec8e3 35%, rgba(255,255,255,0.15) 35%)`;
+  let started = false;
+  function startMusic(){
+    if(started) return;
+    started = true;
+    music.play().catch(()=>{});
+    document.removeEventListener('click', startMusic);
+    document.removeEventListener('keydown', startMusic);
+    document.removeEventListener('scroll', startMusic);
+  }
+  document.addEventListener('click', startMusic);
+  document.addEventListener('keydown', startMusic);
+  document.addEventListener('scroll', startMusic, {once:true});
 });
 
 function toggleMusic(){
   const music = document.getElementById('bg-music');
   const btn = document.getElementById('music-btn');
-  const hint = document.getElementById('music-hint');
-  hint.style.display = 'none';
   if(music.paused){
     music.play();
     btn.classList.remove('muted');
@@ -1458,12 +1468,6 @@ function toggleMusic(){
     btn.classList.add('muted');
   }
 }
-
-document.getElementById('volume-slider').addEventListener('input', function(){
-  document.getElementById('bg-music').volume = this.value;
-  const pct = this.value * 100;
-  this.style.background = `linear-gradient(to right, #7ec8e3 ${pct}%, rgba(255,255,255,0.15) ${pct}%)`;
-});
 </script>
 </body>
 </html>
