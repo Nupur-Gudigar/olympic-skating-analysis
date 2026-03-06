@@ -1,5 +1,5 @@
 # 🥇 Olympic Figure Skating: Art vs Technical Power (2006–2026)
-[![Image of my-views-counter](https://github.com/Nupur-Gudigar/my-views-counter/blob/master/svg/1067486548/badge.svg)](https://github.com/Nupur-Gudigar/my-views-counter/blob/master/readme/1067486548/week.md)
+[![Image of my-views-counter](https://github.com/Nupur-Gudigar/my-views-counter/blob/master/svg/1169563951/badge.svg)](https://github.com/Nupur-Gudigar/my-views-counter/blob/master/readme/1169563951/week.md)
 
 ![Banner](./skating.gif)
 
